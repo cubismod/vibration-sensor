@@ -1,0 +1,51 @@
+esphome:
+  name: laundrysensorc
+
+esp32:
+  board: nodemcu-32s
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: !secret ota_pw
+
+ota:
+  password: !secret ota_pw
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_pw
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Laundrysensor Fallback Hotspot"
+    password: "0ljU9Qad7GRW"
+
+captive_portal:
+
+sensor:
+  - platform: wifi_signal
+    name: "ESPVibration1 WiFi Signal"
+    update_interval: 60s
+  - platform: uptime
+    name: "ESPVibration1 Uptime"
+    update_interval: 60s
+
+# Enables status LED
+status_led:
+  pin: GPIO2
+
+# Enables the SW-420 Vibration Sensor
+binary_sensor:  
+  - platform: gpio  
+    name: "laundry"  
+    pin:
+      number: GPIO13
+      mode: INPUT
+    device_class: vibration
+    filters:
+     - delayed_on: 10ms
+     - delayed_off: 5min
+    
