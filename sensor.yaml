@@ -18,6 +18,11 @@ wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_pw
 
+  manual_ip:
+    static_ip: 192.168.1.146
+    gateway: 192.168.1.1
+    subnet: 255.255.255.0
+
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Laundrysensor Fallback Hotspot"
@@ -46,6 +51,15 @@ binary_sensor:
       mode: INPUT
     device_class: vibration
     filters:
-     - delayed_on: 10ms
-     - delayed_off: 5min
+     - delayed_on: 3sec
+     - delayed_off: 2min
+  - platform: gpio
+    name: "laundry_raw"
+    pin:
+      number: GPIO13
+      mode: INPUT
+    device_class: vibration
     
+switch:
+  - platform: restart
+    name: "Restart Laundry Sensor"
