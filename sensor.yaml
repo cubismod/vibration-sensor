@@ -51,7 +51,7 @@ binary_sensor:
       mode: INPUT
     device_class: vibration
     filters:
-     - delayed_on: 3sec
+     - delayed_on: 1min
      - delayed_off: 2min
   - platform: gpio
     name: "laundry_raw"
